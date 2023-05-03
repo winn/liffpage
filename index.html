@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook Share Button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+</head>
+<body>
+  <h1>My Website</h1>
+  <p>Welcome to my website!</p>
+  
+  <button onclick="shareToFacebook()">Share to Facebook</button>
+
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '856828411477818',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v11.0'
+      });
+    };
+  
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+    function shareToFacebook() {
+      FB.ui({
+        method: 'share',
+        href: 'https://script.google.com/macros/s/AKfycbxdz5YPqYzDlhvjDt-Ide8GL79SFbE20d7BlXOd6NGJKVxM-52ML8YH7IicAvZAd_BkCw/exec',
+        quote: 'Check out my website!',
+      }, function(response){
+        // Handle the response from Facebook Share Dialog API
+      });
+    }
+  </script>
+</body>
+</html>
