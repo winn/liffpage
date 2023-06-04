@@ -1,24 +1,44 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My LIFF App</title>
+  <meta charset="UTF-8">
+  <title>LINE LIFF App</title>
 </head>
 <body>
-  <p id="scanCode"></p>
-  <p>
-    <button id="btnScanCode" onclick="scanCode();">Scan Code</button>
-  </p>
-  <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
+  <h1>LINE LIFF App</h1>
+
+  <form id="message-form">
+    <label for="message">Enter your message:</label>
+    <input type="text" id="message" name="message" required>
+    <button type="submit">Send Message</button>
+  </form>
+
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
   <script>
-    function scanCode() {
-      liff.scanCode().then(result => {
-        const stringifiedResult = JSON.stringify(result);
-        alert(stringifiedResult);
-        document.getElementById("scanCode").textContent = stringifiedResult;
+    window.onload = function() {
+      liff.init({ liffId: '1661038537-M1XKRp6n' }).then(() => {
+        document.getElementById('message-form').addEventListener('submit', sendMessage);
+      });
+    };
+
+    function sendMessage(event) {
+      event.preventDefault();
+      const message = document.getElementById('message').value;
+      if (!message) {
+        alert('Please enter a message!');
+        return;
+      }
+      liff.sendMessages([{
+        type: 'text',
+        text: message
+      }]).then(() => {
+        alert('Message sent successfully!');
+        liff.closeWindow();
+      }).catch((error) => {
+        alert('Error sending message: ' + error);
       });
     }
-    liff.init({ liffId: "1661038537-M1XKRp6n" }, () => {}, err => console.error(err.code, error.message));
   </script>
-</body>
+  
+  </body>
 </html>
